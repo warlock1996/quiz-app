@@ -1,0 +1,10 @@
+.question {
+    margin-top: 3rem;
+}
+.question--options {
+    margin: 2rem 0 2rem 0;
+}
+.question--actions {
+    display: flex;
+    justify-content: space-between;
+}
