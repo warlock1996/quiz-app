@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { FormEvent, useEffect, useMemo, useState } from 'react'
 import { FormControl, InputLabel, Select, MenuItem, Button, Typography, useMediaQuery } from '@mui/material'
 import ElectricBoltIcon from '@mui/icons-material/ElectricBolt'
 import './Form.css'
+import { FormProps, FormState } from '../types/common'
 
 const diffculties = [
 	{ id: 1, name: 'easy' },
@@ -23,8 +24,8 @@ const questions = [
 	{ id: 5, value: 50 },
 ]
 
-function Form({ onSubmit, loading }) {
-	const [data, setData] = useState({
+const Form: React.FC<FormProps> = ({ onSubmit, loading }) => {
+	const [data, setData] = useState<FormState>({
 		category: '',
 		difficulty: '',
 		type: '',
@@ -65,11 +66,11 @@ function Form({ onSubmit, loading }) {
 				color='primary'
 				gutterBottom
 			>
-				<ElectricBoltIcon fontSize='0.5rem' color='primary' />
+				<ElectricBoltIcon color='primary' />
 				Quizz App
 			</Typography>
 
-			<FormControl fullWidth className='form-control' size={isSmall ? 'small' : 'large'}>
+			<FormControl fullWidth className='form-control' size={isSmall ? 'small' : 'medium'}>
 				<InputLabel id='demo-simple-select-label'>Category</InputLabel>
 				<Select
 					labelId='demo-simple-select-label'
@@ -85,7 +86,7 @@ function Form({ onSubmit, loading }) {
 					))}
 				</Select>
 			</FormControl>
-			<FormControl fullWidth className='form-control' size={isSmall ? 'small' : 'large'}>
+			<FormControl fullWidth className='form-control' size={isSmall ? 'small' : 'medium'}>
 				<InputLabel id='demo-simple-select-label'>Type</InputLabel>
 				<Select
 					labelId='demo-simple-select-label'
@@ -101,7 +102,7 @@ function Form({ onSubmit, loading }) {
 					))}
 				</Select>
 			</FormControl>
-			<FormControl fullWidth className='form-control' size={isSmall ? 'small' : 'large'}>
+			<FormControl fullWidth className='form-control' size={isSmall ? 'small' : 'medium'}>
 				<InputLabel id='demo-simple-select-label'>Difficulty</InputLabel>
 				<Select
 					labelId='demo-simple-select-label'
@@ -117,7 +118,7 @@ function Form({ onSubmit, loading }) {
 					))}
 				</Select>
 			</FormControl>
-			<FormControl fullWidth className='form-control' size={isSmall ? 'small' : 'large'}>
+			<FormControl fullWidth className='form-control' size={isSmall ? 'small' : 'medium'}>
 				<InputLabel id='demo-simple-select-label'>Questions</InputLabel>
 				<Select
 					labelId='demo-simple-select-label'

@@ -4,25 +4,25 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 import { Container } from '@mui/material'
-import { lazy, useCallback, useState, Suspense, useRef, useMemo } from 'react'
+import { lazy, useCallback, useState, Suspense, useRef, useMemo, FormEvent } from 'react'
 
 import ResultSkeleton from './components/Skeletons/ResultSkeleton'
 import FormSkeleton from './components/Skeletons/FormSkeleton'
 import QuestionSkeleton from './components/Skeletons/QuestionSkeleton'
+import { FormState, Question } from './types/common'
 
 const Form = lazy(() => import('./components/Form'))
 const QuestionPaper = lazy(() => import('./components/QuestionPaper'))
 const ResultCard = lazy(() => import('./components/ResultCard'))
 
 function App() {
-	const [questions, setQuestions] = useState([])
-	const [showForm, setShowForm] = useState(true)
-	const [loadingQuestions, setLoadingQuestions] = useState(false)
-	const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
-	const [showResult, setResult] = useState(false)
-	const totalScore = useRef(0)
-
-	const currentQuestion = useMemo(() => {
+	const [questions, setQuestions] = useState<Array<Question>>([])
+	const [showForm, setShowForm] = useState<boolean>(true)
+	const [loadingQuestions, setLoadingQuestions] = useState<boolean>(false)
+	const [showResult, setResult] = useState<boolean>(false)
+	const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0)
+	const totalScore = useRef<number>(0)
+	const currentQuestion = useMemo<Question>(() => {
 		if (!questions.length) return null
 		return {
 			...questions[currentQuestionIndex],
@@ -33,7 +33,7 @@ function App() {
 		}
 	}, [currentQuestionIndex, questions])
 
-	const onSubmitCallback = useCallback((event, data) => {
+	const onSubmitCallback = useCallback((event: FormEvent, data: FormState) => {
 		event.preventDefault()
 		setLoadingQuestions(true)
 		fetch(
@@ -55,7 +55,6 @@ function App() {
 
 	const onMarkCallback = useCallback(
 		({ currentQuestion, option, event }) => {
-			console.log('checked: ', currentQuestion, option, event)
 			const index = questions.findIndex((ques) => currentQuestion.question === ques.question)
 			if (index === -1) return
 
@@ -82,7 +81,6 @@ function App() {
 		} else {
 			setResult(true)
 		}
-		console.log(totalScore)
 	}, [currentQuestion, currentQuestionIndex, questions])
 
 	const onPrevCallback = useCallback(() => {
@@ -91,9 +89,8 @@ function App() {
 		}
 	}, [currentQuestionIndex])
 
-
 	return (
-		<Container maxWidth={showResult ? 'sm' : showForm ? 'sm' : 'lg'} className='App'>
+		<Container maxWidth={showResult ? 'sm' : showForm ? 'sm' : 'lg'} className='App' >
 			{showResult ? (
 				<Suspense fallback={<ResultSkeleton />}>
 					<ResultCard totalScore={totalScore.current} questions={questions} />

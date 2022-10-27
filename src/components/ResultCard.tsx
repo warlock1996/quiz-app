@@ -16,7 +16,12 @@ import {
 } from '@mui/material'
 import { Replay, ExpandMore } from '@mui/icons-material'
 
-const ResultCard = ({ totalScore, questions }) => {
+type ResultCardProps = {
+	totalScore: number
+	questions: Array<Record<string, any>>
+}
+
+const ResultCard: React.FC<ResultCardProps> = ({ totalScore, questions }) => {
 	const summary = questions.map((ques) => {
 		const result = [...ques.incorrect_answers, ques.correct_answer].map((ians) => {
 			return {

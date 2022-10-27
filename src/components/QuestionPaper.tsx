@@ -2,8 +2,16 @@ import React from 'react'
 import { Typography, Button, FormGroup, FormControlLabel, Checkbox, Radio, useMediaQuery } from '@mui/material'
 import { East, West } from '@mui/icons-material'
 import './QuestionPaper.css'
+import { QuestionPaperProps } from '../types/common'
 
-const QuestionPaper = ({ questions, currentQuestion, currentQuestionIndex, onMark, onNext, onPrev }) => {
+const QuestionPaper: React.FC<QuestionPaperProps> = ({
+	questions,
+	currentQuestion,
+	currentQuestionIndex,
+	onMark,
+	onNext,
+	onPrev,
+}) => {
 	const isSmall = useMediaQuery('(max-width: 600px)')
 
 	return (
